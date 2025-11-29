@@ -285,7 +285,48 @@
             }
         });
 
+        // Theme Toggle Function
+        window.toggleTheme = function() {
+            const body = document.body;
+            const themeToggle = document.getElementById('theme-toggle');
+            const icon = themeToggle.querySelector('i');
+
+            // Toggle light/dark theme
+            if (body.classList.contains('light-theme')) {
+                body.classList.remove('light-theme');
+                localStorage.setItem('theme', 'dark');
+                // Update icon to sun (for dark mode)
+                icon.setAttribute('data-lucide', 'sun');
+            } else {
+                body.classList.add('light-theme');
+                localStorage.setItem('theme', 'light');
+                // Update icon to moon (for light mode)
+                icon.setAttribute('data-lucide', 'moon');
+            }
+
+            // Re-initialize icons
+            lucide.createIcons();
+        };
+
+        // Load theme preference on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            const body = document.body;
+            const themeToggle = document.getElementById('theme-toggle');
+            const icon = themeToggle.querySelector('i');
+
+            if (savedTheme === 'light') {
+                body.classList.add('light-theme');
+                icon.setAttribute('data-lucide', 'moon');
+            } else {
+                body.classList.remove('light-theme');
+                icon.setAttribute('data-lucide', 'sun');
+            }
+
+            lucide.createIcons();
+        });
+
         // Console welcome message
-        console.log('%c🤖 MOB - Managerial Orchestration Board', 'font-size: 20px; font-weight: bold; color: #6366f1;');
+        console.log('%cMOB - Managerial Orchestration Board', 'font-size: 20px; font-weight: bold; color: #6366f1;');
         console.log('%cEnterprise AI Agent Management Platform', 'font-size: 14px; color: #a1a1aa;');
         console.log('%cDemo Version - All data is mocked', 'font-size: 12px; color: #71717a;');
